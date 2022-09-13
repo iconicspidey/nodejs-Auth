@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>login</title>
+    </head>
+
+    <body>
+        <style>
+            * {
+                padding: 0;
+                margin: 0;
+                box-sizing: border-box;
+            }
+
+            body {
+                background-color: white;
+                height: 100vh;
+                display: flex;
+                justify-content: center;
+                background-color: rgb(42, 52, 56);
+            }
+
+            form {
+                width: 330px;
+                padding: 30px;
+            }
+
+            header {
+                margin: 15px;
+                text-align: center;
+                font-size: 1.5rem;
+                color: white;
+            }
+
+            input {
+                background-color: gray;
+                border: none;
+                font-size: 1.2rem;
+                color: rgb(60, 234, 11);
+                outline: none;
+                text-indent: 5px;
+            }
+
+            input,
+            button {
+                width: 270px;
+                height: 40px;
+                margin: 10px;
+            }
+
+            button {
+                background-color: blue;
+                color: white;
+                border: none;
+                font-size: 1.2rem;
+            }
+
+            a {
+                color: #fff;
+                text-decoration: none;
+            }
+        </style>
+        <form>
+            <header>Login</header>
+            <input type="text" placeholder="user" class="user">
+            <input type="password" placeholder="password" class="password">
+            <button type="submit">sign in</button>
+            <a href="/"> Dont have an account ? pls sign up</a>
+        </form>
+    </body>
+    <script>
+        const form = document.querySelector("form");
+        form.addEventListener('submit', function (e) {
+            e.preventDefault();
+            const user = document.querySelector('.user').value;
+            const password = document.querySelector(".password").value;
+            const body = { user, password };
+            fetch('http://localhost:4000/sign_in', {
+                method: "POST",
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(body),
+            }).then(res => {
+                return res.json()
+            }).then((data) => {
+                console.log(data.message)
+                if (data.role == 'admin') {
+                    location.assign('admin');
+                } else {
+                    location.assign('basic')
+                }
+            }).catch(err => console.log(err))
+
+        })
+
+    </script>
+
+</html>

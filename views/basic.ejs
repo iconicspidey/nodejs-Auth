@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>basic</title>
+    </head>
+
+    <body>
+        <nav>
+            <div class="title">basic user</div>
+            <div class="container">
+                <div class="name">amina</div>
+                <button class="logout">logout</button>
+            </div>
+        </nav>
+        <main>
+            <div class="wrapper">
+                <div class="user">user: <span class="user1">amina</span></div>
+                <div class="role">role: <span class="role1">basic</span></div>
+            </div>
+        </main>
+        <script>
+
+            const user = document.querySelector('.user1');
+            const role = document.querySelector('.role1');
+            const name = document.querySelector('.name');
+            fetch('http://localhost:4000/user').
+                then(res => res.json()).
+                then((data) => {
+                    role.innerText = data.role;
+                    user.innerText = data.user;
+                    name.innerText = data.user;
+                })
+            document.querySelector('.logout').addEventListener('click', logout);
+            function logout() {
+                fetch('http://localhost:4000/logout').then(logout => {
+                    return logout.json();
+                }).then(log => {
+                    console.log(log)
+                }).catch(err = console.log(err))
+            }
+        </script>
+        <style>
+            * {
+                padding: 0;
+                margin: 0;
+                box-sizing: border-box;
+            }
+
+            nav {
+                height: 70px;
+                display: flex;
+                justify-content: space-around;
+                align-items: center;
+            }
+
+            .container {
+                display: flex;
+                align-items: center;
+                gap: 10px;
+            }
+
+            .title {
+                font-size: 2rem;
+                color: #adfa;
+            }
+
+            .name {
+                font-size: 2.2rem;
+                color: blueviolet;
+            }
+
+            .logout {
+                font-size: 1.2em;
+                padding: 5px 10px;
+                color: blueviolet;
+                background-color: rgb(125, 54, 54);
+                border-color: transparent;
+            }
+
+            main {
+                height: calc(100vh - 70px);
+                font-size: 2rem;
+            }
+
+            .wrapper {
+                padding: 20px 60px;
+                border-color: #adfaff;
+                border-width: 2px;
+                border-style: groove;
+                margin: 20px auto;
+                width: 300px;
+                color: #adfa;
+            }
+
+            body {
+                background-color: rgb(38, 39, 39);
+            }
+        </style>
+
+    </body>
+
+</html>

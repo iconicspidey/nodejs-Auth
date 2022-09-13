@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>home</title>
+    </head>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: white;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            background-color: rgb(42, 52, 56);
+        }
+
+        form {
+            width: 330px;
+            padding: 30px;
+        }
+
+        header {
+            margin: 15px;
+            text-align: center;
+            font-size: 1.5rem;
+            color: white;
+        }
+
+        input {
+            background-color: gray;
+            border: none;
+            font-size: 1.2rem;
+            color: rgb(60, 234, 11);
+            outline: none;
+            text-indent: 5px;
+        }
+
+        input,
+        button {
+            width: 270px;
+            height: 40px;
+            margin: 10px;
+        }
+
+        button {
+            background-color: blue;
+            color: white;
+            border: none;
+            font-size: 1.2rem;
+        }
+
+        a {
+            color: #fff;
+            text-decoration: none;
+        }
+    </style>
+
+    <body>
+        <form action="sign_up" method="post">
+            <header>sign up</header>
+            <input type="text" id="user" placeholder="user">
+            <input type="text" id="password" placeholder="password">
+            <button>sign in</button>
+            <a href="/login">have an account ? pls login</a>
+        </form>
+    </body>
+    <script>
+        const form = document.querySelector("form");
+        const user = form.user;
+        const password = form.password;
+        form.addEventListener('submit', function (e) {
+            const body = { user: user.value, password: password.value };
+
+            e.preventDefault();
+            fetch('http://localhost:4000/sign_up', {
+                method: 'POST',
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(body)
+            }).then(res => {
+                console.log(res)
+                if (res.ok) location.assign('login')
+                location.assign('login')
+                const json = res.json();
+                return json;
+            }).then((json) => console.log(json)).catch(err => {
+                console.log(err)
+            })
+
+        })
+    </script>
+
+</html>

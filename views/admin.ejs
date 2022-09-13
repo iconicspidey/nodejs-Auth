@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>admin</title>
+    </head>
+
+    <body>
+        <nav>
+            <div class="title">Admin Dashboard</div>
+            <div class="name">spidey</div>
+            <button class="logout">logout</button>
+        </nav>
+        <main>
+            <div class="wrapper">
+
+            </div>
+        </main>
+        <script>
+            const wrapper = document.querySelector('.wrapper');
+            fetch('http://localhost:4000/user').
+                then(res => res.json()).
+                then((data) => {
+                    const admin = data.find(user => user.role == 'admin');
+                    document.querySelector('.name').innerText = admin.user;
+                    const basic = data.filter(users => users.role !== 'admin');
+                    console.log(basic)
+                    basic.forEach(element => {
+                        wrapper.innerHTML += (` <div class="container">
+                                   <div class="user">${element.user}</div>
+                                   <div class="make">${element.role}</div>
+                                   <button id="${element._id}" class="delete">delete</button>
+                                          </div>`)
+                    })
+                })
+            wrapper.onclick = function (e) {
+                const id = e.target.id;
+                console.log(e.target.className)
+                if (e.target.className === 'make') {
+                    fetch("http://localhost:4000/ " + id, {
+                        method: "PATCH"
+                    }).then((res => res.json())).then(res => console.log(res))
+                }
+                if (e.targe.className === 'delete') {
+                    fetch("h ttp://localhost:4000/" + id, {
+                        method: "DELETE"
+                    }).then(res => {
+                        return res.json()
+                    }).then(data => {
+                        console.log(data)
+                    }).catch(err => console.log(err))
+                }
+            }
+        </script>
+        <style>
+            * {
+                padding: 0;
+                margin: 0;
+                box-sizing: border-box;
+            }
+
+            nav {
+                height: 70px;
+                display: flex;
+                justify-content: space-around;
+                align-items: center;
+            }
+
+            .container {
+                display: flex;
+                align-items: center;
+                gap: 15px;
+                margin-top: 10px;
+            }
+
+            .title {
+                font-size: 1.2rem;
+                color: #adfa;
+            }
+
+            .name {
+                font-size: 1.7rem;
+                color: blueviolet;
+            }
+
+            .logout {
+                font-size: 1.2em;
+                padding: 5px 10px;
+                color: blueviolet;
+                background-color: rgb(125, 54, 54);
+                border-color: transparent;
+            }
+
+            .delete {
+                background-color: rgba(165, 53, 45, 0.667);
+                border: none;
+                padding: 10px 15px;
+            }
+
+            main {
+                min-height: calc(100vh - 70px);
+                font-size: 2rem;
+            }
+
+            .wrapper {
+                padding: 10px 30px;
+                border-color: #adfaff;
+                border-width: 2px;
+                border-style: groove;
+                margin: 20px auto;
+                width: 300px;
+                color: #adfa;
+            }
+
+            body {
+                background-color: rgb(38, 39, 39);
+            }
+        </style>
+    </body>
+
+</html>
