@@ -36,23 +36,24 @@
                                           </div>`)
                     })
                 })
-            wrapper.onclick = function (e) {
+            document.querySelector('.logout').addEventListener('click', logout);
+            function logout() {
+                fetch('http://localhost:4000/logout').then(logout => {
+                    return logout.json();
+                }).then(log => {
+                    console.log(log)
+                }).catch(err = console.log(err))
+            }
+            wrapper.onclick = (e) => {
                 const id = e.target.id;
-                console.log(e.target.className)
-                if (e.target.className === 'make') {
-                    fetch("http://localhost:4000/ " + id, {
-                        method: "PATCH"
-                    }).then((res => res.json())).then(res => console.log(res))
-                }
-                if (e.targe.className === 'delete') {
-                    fetch("h ttp://localhost:4000/" + id, {
-                        method: "DELETE"
-                    }).then(res => {
-                        return res.json()
-                    }).then(data => {
-                        console.log(data)
-                    }).catch(err => console.log(err))
-                }
+                fetch("http://localhost:4000/" + id, { method: 'PATCH' })
+                fetch("http://localhost:4000/" + id, {
+                    method: "DELETE"
+                }).then(res => {
+                    return res.json()
+                }).then(data => {
+                    console.log(data)
+                }).catch(err => console.log(err))
             }
         </script>
         <style>
@@ -107,9 +108,6 @@
 
             .wrapper {
                 padding: 10px 30px;
-                border-color: #adfaff;
-                border-width: 2px;
-                border-style: groove;
                 margin: 20px auto;
                 width: 300px;
                 color: #adfa;
