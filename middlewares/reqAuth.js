@@ -29,7 +29,6 @@ function adminAuth(req, res, next) {
       next();
     }
   } else {
-    res.clearCookie("jwt");
     res.redirect("/");
   }
 }

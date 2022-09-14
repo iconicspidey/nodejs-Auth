@@ -6,10 +6,10 @@ const { remove, makeAdmin } = require("../auth/adminAuth");
 const logout = require("../controllers/logout");
 const router = express.Router();
 
+router.route("/user").get(getUser);
+router.route("/logout").get(logout);
 router.route("/sign_up").post(signUp);
 router.route("/sign_in").post(signIn);
-router.route("/user").get(getUser);
+router.route("/makeadmin/:id").patch(makeAdmin);
 router.route("/:id").delete(remove);
-router.route("/:id").patch(makeAdmin);
-router.route("/logout").get(logout);
 module.exports = router;

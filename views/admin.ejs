@@ -24,14 +24,14 @@
             fetch('http://localhost:4000/user').
                 then(res => res.json()).
                 then((data) => {
-                    const admin = data.find(user => user.role == 'admin');
+                    const admin = data[0]
                     document.querySelector('.name').innerText = admin.user;
-                    const basic = data.filter(users => users.role !== 'admin');
+                    const basic = data[1]
                     console.log(basic)
                     basic.forEach(element => {
                         wrapper.innerHTML += (` <div class="container">
                                    <div class="user">${element.user}</div>
-                                   <div class="make">${element.role}</div>
+                                   <div class=${element.role} id="${element._id}">${element.role}</div>
                                    <button id="${element._id}" class="delete">delete</button>
                                           </div>`)
                     })
@@ -42,18 +42,31 @@
                     return logout.json();
                 }).then(log => {
                     console.log(log)
-                }).catch(err = console.log(err))
+                })
+                console.log('hello')
             }
             wrapper.onclick = (e) => {
                 const id = e.target.id;
-                fetch("http://localhost:4000/" + id, { method: 'PATCH' })
-                fetch("http://localhost:4000/" + id, {
-                    method: "DELETE"
-                }).then(res => {
-                    return res.json()
-                }).then(data => {
-                    console.log(data)
-                }).catch(err => console.log(err))
+                const role = e.target.className;
+                console.log(id)
+                if (role === 'admin' || role === 'basic') {
+                    fetch(`http://localhost:4000/makeadmin/${id}`, {
+                        method: 'PATCH',
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({ role })
+                    }).then(res => res.json())
+                        .then(res => console.log(res))
+                }
+                if (e.target.className === 'delete') {
+                    console.log('yes this is a delete button')
+                    fetch("http://localhost:4000/" + id, {
+                        method: "DELETE"
+                    }).then(res => {
+                        return res.json()
+                    }).then(data => {
+                        console.log(data)
+                    }).catch(err => console.log(err))
+                }
             }
         </script>
         <style>

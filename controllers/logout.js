@@ -1,5 +1,5 @@
 const logout = (req, res) => {
   res.clearCookie("jwt");
-  res.location("/");
+  res.json({ message: "success" });
 };
 module.exports = logout;
