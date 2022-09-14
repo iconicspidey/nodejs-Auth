@@ -61,13 +61,19 @@
             color: #fff;
             text-decoration: none;
         }
+
+        span {
+            color: red;
+            margin-left: 10px;
+        }
     </style>
 
     <body>
         <form action="sign_up" method="post">
             <header>sign up</header>
-            <input type="text" id="user" placeholder="user">
-            <input type="text" id="password" placeholder="password">
+            <span></span>
+            <input required type="text" id="user" placeholder="user">
+            <input required type="text" id="password" placeholder="password">
             <button>sign in</button>
             <a href="/login">have an account ? pls login</a>
         </form>
@@ -78,7 +84,7 @@
         const password = form.password;
         form.addEventListener('submit', function (e) {
             const body = { user: user.value, password: password.value };
-
+            const error = document.querySelector('span');
             e.preventDefault();
             fetch('http://localhost:4000/sign_up', {
                 method: 'POST',
@@ -87,15 +93,17 @@
                 },
                 body: JSON.stringify(body)
             }).then(res => {
-                console.log(res)
-                if (res.ok) location.assign('login')
-                location.assign('login')
                 const json = res.json();
                 return json;
-            }).then((json) => console.log(json)).catch(err => {
+            }).then((json) => {
+                console.log(json)
+                error.innerText = json?.error
+                if (json.message) {
+                    location.assign('login')
+                }
+            }).catch(err => {
                 console.log(err)
             })
-
         })
     </script>
 

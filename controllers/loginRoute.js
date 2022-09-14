@@ -11,7 +11,6 @@ const signIn = async (req, res) => {
     const { user, _id, role, password } = getUser;
 
     const compare = await bcrypt.compare(body.password, password);
-    console.log(compare);
     if (user !== body.user || !compare) {
       return res
         .status(404)

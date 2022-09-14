@@ -3,7 +3,6 @@ const cookie = require("cookie-parser");
 const server = require("./db");
 const router = require("./routes/userRoutes");
 const { adminAuth, basicAuth } = require("./middlewares/reqAuth");
-const signMiddleware = require("./middlewares/signMiddleware");
 const app = express();
 
 // middlewares
@@ -14,7 +13,7 @@ app.set("view engine", "ejs");
 app.use(express.static("views"));
 // renders
 app.get("/", (req, res) => res.render("signup"));
-app.get("/login", signMiddleware, (req, res) => res.render("login"));
+app.get("/login", (req, res) => res.render("login"));
 app.get("/basic", basicAuth, (req, res) => res.render("basic"));
 app.get("/admin", adminAuth, (req, res) => res.render("admin"));
 
