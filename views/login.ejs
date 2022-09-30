@@ -93,11 +93,14 @@
             }).then(res => {
                 return res.json()
             }).then((data) => {
-                error.innerText = data.message;
+                console.log(data);
+                if (data.message) {
+                    error.innerText = data.message;
+                }
                 if (data.role == 'admin') {
-                    location.assign('admin');
+                    location.assign('/admin');
                 } else {
-                    location.assign('basic')
+                    location.assign('/basic')
                 }
             }).catch(err => console.log(err))
 

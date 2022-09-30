@@ -6,21 +6,26 @@ function basicAuth(req, res, next) {
   if (cookie) {
     const decode = jwt.verify(cookie, secreteKey);
     if (decode.role !== "basic") {
-      res.redirect("admin");
+      res.redirect("/admin");
     } else {
       next();
     }
+  } else {
+    res.redirect("/");
   }
 }
 function adminAuth(req, res, next) {
   const cookie = req.cookies?.jwt;
+  console.log("dkfafjdl " + cookie);
   if (cookie) {
     const decode = jwt.verify(cookie, secreteKey);
     if (decode.role !== "admin") {
-      res.redirect("basic");
+      res.redirect("/basic");
     } else {
       next();
     }
+  } else {
+    res.redirect("/");
   }
 }
 module.exports = { basicAuth, adminAuth };

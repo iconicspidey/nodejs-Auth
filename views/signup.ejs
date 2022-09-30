@@ -96,8 +96,9 @@
                 const json = res.json();
                 return json;
             }).then((json) => {
-                console.log(json)
-                error.innerText = json?.error
+                if (json.error) {
+                    error.innerText = json?.error;
+                }
                 if (json.message) {
                     location.assign('login')
                 }

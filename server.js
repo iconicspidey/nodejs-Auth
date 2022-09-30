@@ -21,5 +21,6 @@ app.get("/admin", adminAuth, (req, res) => res.render("admin"));
 app.use(router);
 // server
 app.listen(4000, () => console.log("server running"));
+
 // connected to data base
 server();
